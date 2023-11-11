@@ -101,7 +101,7 @@ spotless {
         gherkinUtils()
     }
     yaml {
-        target("src/**/*.yaml")
+        target("src/**/*.yaml", ".github/**/*.yaml")
         jackson()
     }
 }
