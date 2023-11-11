@@ -7,13 +7,6 @@ import com.azure.cosmos.models.CosmosDatabaseResponse;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.spring.CucumberContextConfiguration;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.containers.CosmosDBEmulatorContainer;
-import org.testcontainers.utility.DockerImageName;
-
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,6 +15,11 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.testcontainers.containers.CosmosDBEmulatorContainer;
+import org.testcontainers.utility.DockerImageName;
 
 @Slf4j
 @CucumberContextConfiguration
@@ -35,8 +33,7 @@ public class SpringBootTestLoader {
         log.info("Set up");
 
         cosmosDBEmulatorContainer = new CosmosDBEmulatorContainer(
-                DockerImageName.parse("mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest")
-        );
+                DockerImageName.parse("mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest"));
 
         cosmosDBEmulatorContainer.start();
 
@@ -67,7 +64,6 @@ public class SpringBootTestLoader {
         System.setProperty("javax.net.ssl.trustStorePassword", cosmosDBEmulatorContainer.getEmulatorKey());
         System.setProperty("javax.net.ssl.trustStoreType", "PKCS12");
 
-
         CosmosAsyncClient client = new CosmosClientBuilder()
                 .gatewayMode()
                 .endpointDiscoveryEnabled(false)
@@ -75,17 +71,18 @@ public class SpringBootTestLoader {
                 .key(cosmosDBEmulatorContainer.getEmulatorKey())
                 .buildAsyncClient();
 
-        CosmosDatabaseResponse databaseResponse = client.createDatabaseIfNotExists("Azure").block();
-        CosmosContainerResponse containerResponse = client
-                .getDatabase("Azure")
+        CosmosDatabaseResponse databaseResponse =
+                client.createDatabaseIfNotExists("Azure").block();
+        CosmosContainerResponse containerResponse = client.getDatabase("Azure")
                 .createContainerIfNotExists("ServiceContainer", "/name")
                 .block();
 
-        client
-                .readAllDatabases().toStream().forEach(x -> log.info("DB Created {}", x.getId()));
+        client.readAllDatabases().toStream().forEach(x -> log.info("DB Created {}", x.getId()));
 
-        client
-                .getDatabase("Azure").readAllContainers().toStream().forEach(x -> log.info("Container in Azure is {}", x.getId()));
+        client.getDatabase("Azure")
+                .readAllContainers()
+                .toStream()
+                .forEach(x -> log.info("Container in Azure is {}", x.getId()));
     }
 
     @AfterAll

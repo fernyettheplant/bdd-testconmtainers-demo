@@ -65,6 +65,23 @@ tasks.withType<Test> {
     systemProperty("cucumber.junit-platform.naming-strategy", "long")
 }
 
+configurations {
+    create("cucumberRuntime") {
+        extendsFrom(configurations["testImplementation"])
+    }
+ }
+
+tasks.register("cucumberCli") {
+    dependsOn("assemble", "testClasses")
+    doLast {
+        javaexec {
+            mainClass = "io.cucumber.core.cli.Main"
+            classpath = configurations["cucumberRuntime"] + sourceSets["main"].output + sourceSets["test"].output
+        }
+    }
+}
+
+
 tasks.bootBuildImage {
     builder.set("paketobuildpacks/builder-jammy-base:latest")
 }

@@ -24,6 +24,6 @@ class RunCucumberTest {
     @Test
     void testSuite() {
         File bddResourcesDirectory = new File("src/test/resources/bdd");
-        assertThat(bddResourcesDirectory).doesNotExist();
+        assertThat(bddResourcesDirectory).exists();
     }
 }
