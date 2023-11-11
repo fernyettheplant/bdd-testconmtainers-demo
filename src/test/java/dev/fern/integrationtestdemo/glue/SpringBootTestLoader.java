@@ -34,10 +34,14 @@ public class SpringBootTestLoader {
         log.info("Set up");
 
         cosmosDBEmulatorContainer = new CosmosDBEmulatorContainer(
-                        DockerImageName.parse("mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest"))
-                .waitingFor(Wait.forLogMessage("(?s).*Started\\r\\n$", 50));
+                        DockerImageName.parse("mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest"));
 
-        cosmosDBEmulatorContainer.start();
+        try {
+            cosmosDBEmulatorContainer.start();
+        } catch (Exception e) {
+            log.error("oopsies", e);
+            throw e;
+        }
 
         Path keyStoreFile;
 
