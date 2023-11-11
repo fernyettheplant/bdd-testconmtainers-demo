@@ -69,7 +69,7 @@ configurations {
     create("cucumberRuntime") {
         extendsFrom(configurations["testImplementation"])
     }
- }
+}
 
 tasks.register("cucumberCli") {
     dependsOn("assemble", "testClasses")
@@ -80,7 +80,6 @@ tasks.register("cucumberCli") {
         }
     }
 }
-
 
 tasks.bootBuildImage {
     builder.set("paketobuildpacks/builder-jammy-base:latest")
