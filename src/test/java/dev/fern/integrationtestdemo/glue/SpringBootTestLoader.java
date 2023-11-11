@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.CosmosDBEmulatorContainer;
-import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
 @Slf4j
@@ -34,14 +33,9 @@ public class SpringBootTestLoader {
         log.info("Set up");
 
         cosmosDBEmulatorContainer = new CosmosDBEmulatorContainer(
-                        DockerImageName.parse("mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest"));
+                DockerImageName.parse("mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest"));
 
-        try {
-            cosmosDBEmulatorContainer.start();
-        } catch (Exception e) {
-            log.error("oopsies", e);
-            throw e;
-        }
+        cosmosDBEmulatorContainer.start();
 
         Path keyStoreFile;
 
