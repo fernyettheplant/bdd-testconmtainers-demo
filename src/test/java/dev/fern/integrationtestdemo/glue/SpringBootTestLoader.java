@@ -3,6 +3,8 @@ package dev.fern.integrationtestdemo.glue;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.BeforeAll;
 import io.cucumber.spring.CucumberContextConfiguration;
+import java.time.Duration;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,14 +21,20 @@ public class SpringBootTestLoader {
     private static KafkaContainer kafkaContainer;
 
     @BeforeAll
+    @SneakyThrows
     public static void setUp() {
         log.info("Setting up...");
 
-        psqlContainer = new PostgreSQLContainer<>(DockerImageName.parse("postgres:latest"));
-        kafkaContainer = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:latest"));
+        psqlContainer = new PostgreSQLContainer<>(DockerImageName.parse("postgres"));
+        kafkaContainer = new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka"));
 
-        psqlContainer.start();
-        kafkaContainer.start();
+        psqlContainer
+                .withDatabaseName("db1")
+                .withUsername("user1")
+                .withPassword("passge")
+                .start();
+        kafkaContainer.withEmbeddedZookeeper().start();
+        Thread.sleep(Duration.ofMinutes(1).toMillis());
     }
 
     @AfterAll
