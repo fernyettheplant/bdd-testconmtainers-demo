@@ -27,6 +27,7 @@ dependencyManagement {
     imports {
         mavenBom("org.junit:junit-bom:5.10.1")
         mavenBom("io.cucumber:cucumber-bom:7.14.0")
+        mavenBom("org.testcontainers:testcontainers-bom:1.19.3")
     }
 }
 
@@ -54,10 +55,10 @@ dependencies {
     testImplementation("io.cucumber:cucumber-junit-platform-engine")
     testImplementation("io.cucumber:cucumber-spring")
 
-    testImplementation("org.testcontainers:testcontainers:1.19.3")
-    testImplementation("org.testcontainers:azure:1.19.3")
-    testImplementation("org.testcontainers:postgresql:1.19.3")
-    testImplementation("org.testcontainers:kafka:1.19.3")
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation("org.testcontainers:azure")
+    testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:kafka")
 
     // CosmosDB
     implementation("com.azure:azure-cosmos:4.52.0")
