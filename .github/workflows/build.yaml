@@ -8,9 +8,8 @@ jobs:
     runs-on:
     - "ubuntu-latest"
     steps:
-    - uses: "actions/checkout@v4"
     - name: "Set Up Job"
-      uses: "fernyettheplant/bdd-testconmtainers-demo/.github/actions/setup/action.yaml@main"
+      uses: "./.github/actions/setup"
     - name: "Build Application"
       run: "./gradlew clean assemble"
   unit-tests:
