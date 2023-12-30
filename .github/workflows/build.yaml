@@ -1,6 +1,6 @@
 ---
 name: "Build, Test & Security Tests"
-run-name: "Running commit ${{ env.GITHUB_SHA }}"
+run-name: "Running commit ${{ github.sha }}"
 "on":
 - "push"
 jobs:
