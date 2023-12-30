@@ -1,0 +1,46 @@
+---
+name: "Build, Test & Security Tests"
+run-name: "Running commit ${{ env.GITHUB_SHA }}"
+"on":
+- "push"
+jobs:
+  setup-workflow:
+    runs-on:
+    - "ubuntu-latest"
+    steps:
+    - uses: "actions/checkout@v4"
+    - name: "Set Up GraalVM 21"
+      uses: "graalvm/setup-graalvm@v1"
+      with:
+        java-version: 21
+        distribution: "graalvm"
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+    - name: "Setup Gradle"
+      uses: "gradle/gradle-build-action@v3.0.0-beta.1"
+  build-application:
+    needs:
+    - "setup-workflow"
+    runs-on:
+    - "ubuntu-latest"
+    steps:
+    - name: "Build Application"
+      run: "./gradlew clean assemble"
+  unit-tests:
+    needs:
+    - "build-application"
+    runs-on:
+    - "ubuntu-latest"
+    steps:
+    - name: "Build Application"
+      run: "./gradlew check"
+  integration-test:
+    needs:
+    - "build-application"
+    runs-on:
+    - "ubuntu-latest"
+    - name: "Setup Testcontainers Cloud Client"
+      uses: "atomicjar/testcontainers-cloud-setup-action@v1"
+      with:
+        token: "${{ secrets.TC_CLOUD_TOKEN }}"
+    - name: "Run Integration Tests"
+      run: "./gradlew cucumberCli"

@@ -41,14 +41,14 @@ public class SpringBootTestLoader {
             kafkaContainer.withEmbeddedZookeeper().start();
         });
 
-        CompletableFuture<Void> cosmosSetup = CompletableFuture.runAsync(() -> {
-            cosmosDBEmulatorContainer = new CosmosDBEmulatorContainer(
-                    DockerImageName.parse("mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest"));
+        //        CompletableFuture<Void> cosmosSetup = CompletableFuture.runAsync(() -> {
+        //            cosmosDBEmulatorContainer = new CosmosDBEmulatorContainer(
+        //                    DockerImageName.parse("mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest"));
+        //
+        //            cosmosDBEmulatorContainer.start();
+        //        });
 
-            cosmosDBEmulatorContainer.start();
-        });
-
-        CompletableFuture.allOf(psqlSetup, kafkaSetup, cosmosSetup).join();
+        CompletableFuture.allOf(psqlSetup, kafkaSetup).join();
     }
 
     @AfterAll
