@@ -12,6 +12,6 @@ runs:
     with:
       java-version: 21
       distribution: "graalvm"
-      github-token: "${{ input.github-token }}"
+      github-token: "${{ inputs.github-token }}"
   - name: "Setup Gradle"
     uses: "gradle/gradle-build-action@v3.0.0-beta.1"
