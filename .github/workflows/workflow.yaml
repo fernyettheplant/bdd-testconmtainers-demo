@@ -15,6 +15,6 @@ jobs:
         distribution: "graalvm"
         github-token: "${{ secrets.GITHUB_TOKEN }}"
     - name: "Setup Gradle"
-      uses: "gradle/gradle-build-action@2"
+      uses: "gradle/gradle-build-action@2.11.1"
     - name: "Run Gradle"
       run: "./gradlew cucumberCli"
