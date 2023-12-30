@@ -10,8 +10,6 @@ jobs:
     runs-on:
     - "ubuntu-latest"
     steps:
-    - name: "Set Up Job"
-      uses: "fernyettheplant/bdd-testconmtainers-demo/.github/steps/setup.yaml@main"
     - name: "Build Application"
       run: "./gradlew clean assemble"
   unit-tests:
