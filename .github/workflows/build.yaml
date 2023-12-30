@@ -45,3 +45,29 @@ jobs:
         token: "${{ secrets.TC_CLOUD_TOKEN }}"
     - name: "Run Integration Tests"
       run: "./gradlew cucumberCli"
+  codeql-analysis:
+    needs:
+    - "build-application"
+    runs-on:
+    - "ubuntu-latest"
+    permissions:
+      actions: "read"
+      contents: "read"
+      security-events: "write"
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+        - "java-kotlin"
+    steps:
+    - uses: "actions/checkout@v4"
+    - name: "Initialize CodeQL"
+      uses: "github/codeql-action/init@v3"
+      with:
+        languages: "${{ matrix.language }}"
+    - name: "Perform CodeQL Analysis"
+      uses: "github/codeql-action/analyze@v3"
+      with:
+        category: "/language:${{matrix.language}}"
+    - name: "Autobuild"
+      uses: "github/codeql-action/autobuild@v3"
