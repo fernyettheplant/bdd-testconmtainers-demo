@@ -11,7 +11,7 @@ jobs:
     - "ubuntu-latest"
     steps:
     - name: "Set Up Job"
-      uses: "fernyettheplant/bdd-testconmtainers-demo/.github/workflows/setup-workflow.yaml@main"
+      uses: "fernyettheplant/bdd-testconmtainers-demo/.github/steps/setup.yaml@main"
     - name: "Build Application"
       run: "./gradlew clean assemble"
   unit-tests:
@@ -21,7 +21,7 @@ jobs:
     - "ubuntu-latest"
     steps:
     - name: "Set Up Job"
-      uses: "fernyettheplant/bdd-testconmtainers-demo/.github/workflows/setup-workflow.yaml@main"
+      uses: "fernyettheplant/bdd-testconmtainers-demo/.github/steps/setup.yaml@main"
     - name: "Build Application"
       run: "./gradlew check"
   integration-test:
@@ -31,7 +31,7 @@ jobs:
     - "ubuntu-latest"
     steps:
     - name: "Set Up Job"
-      uses: "fernyettheplant/bdd-testconmtainers-demo/.github/workflows/setup-workflow.yaml@main"
+      uses: "fernyettheplant/bdd-testconmtainers-demo/.github/steps/setup.yaml@main"
     - name: "Setup Testcontainers Cloud Client"
       uses: "atomicjar/testcontainers-cloud-setup-action@v1"
       with:
