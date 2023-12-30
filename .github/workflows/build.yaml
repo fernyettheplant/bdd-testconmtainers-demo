@@ -9,7 +9,7 @@ jobs:
     - "ubuntu-latest"
     steps:
     - name: "Set Up Job"
-      uses: "../actions/setup.yaml"
+      uses: "./.github/actions/setup.yaml"
     - name: "Build Application"
       run: "./gradlew clean assemble"
   unit-tests:
