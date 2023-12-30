@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: "actions/checkout@v4"
     - name: "Set Up Job"
-      uses: ".github/actions/setup.yaml"
+      uses: "fernyettheplant/bdd-testconmtainers-demo/.github/actions/setup.yaml@main"
     - name: "Build Application"
       run: "./gradlew clean assemble"
   unit-tests:
