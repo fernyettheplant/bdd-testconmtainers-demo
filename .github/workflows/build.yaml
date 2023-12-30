@@ -11,6 +11,8 @@ jobs:
     - uses: "actions/checkout@v4"
     - name: "Set Up Job"
       uses: "./.github/actions/setup"
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
     - name: "Build Application"
       run: "./gradlew clean assemble"
   unit-tests:
@@ -19,8 +21,11 @@ jobs:
     runs-on:
     - "ubuntu-latest"
     steps:
+    - uses: "actions/checkout@v4"
     - name: "Set Up Job"
-      uses: "actions/setup.yaml@main"
+      uses: "./.github/actions/setup"
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
     - name: "Build Application"
       run: "./gradlew check"
   integration-test:
@@ -29,8 +34,11 @@ jobs:
     runs-on:
     - "ubuntu-latest"
     steps:
+    - uses: "actions/checkout@v4"
     - name: "Set Up Job"
-      uses: "actions/setup.yaml@main"
+      uses: "./.github/actions/setup"
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
     - name: "Setup Testcontainers Cloud Client"
       uses: "atomicjar/testcontainers-cloud-setup-action@v1"
       with:
