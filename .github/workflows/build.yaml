@@ -38,6 +38,7 @@ jobs:
     - "build-application"
     runs-on:
     - "ubuntu-latest"
+    steps:
     - name: "Setup Testcontainers Cloud Client"
       uses: "atomicjar/testcontainers-cloud-setup-action@v1"
       with:
