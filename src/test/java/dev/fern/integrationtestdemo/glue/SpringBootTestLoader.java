@@ -57,6 +57,6 @@ public class SpringBootTestLoader {
 
         kafkaContainer.stop();
         psqlContainer.stop();
-        cosmosDBEmulatorContainer.stop();
+        //        cosmosDBEmulatorContainer.stop();
     }
 }
